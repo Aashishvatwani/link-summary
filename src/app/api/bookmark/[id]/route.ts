@@ -1,14 +1,15 @@
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Bookmark from '@/lib/models/Bookmark';
-import { NextRequest, NextResponse } from 'next/server';
 
+// Use RouteHandlerContext from 'next'
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   await dbConnect();
 
-  const { id } = params;
+  const { id } = context.params;
 
   if (!id) {
     return NextResponse.json({ error: 'Bookmark ID is required' }, { status: 400 });
