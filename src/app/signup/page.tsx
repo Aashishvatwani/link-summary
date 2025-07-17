@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion'; // Import motion for animations
+import { motion,Variants } from 'framer-motion'; // Import motion for animations
 
 // Re-using the Falling Stars Background Component
 const StarsBackground = () => {
@@ -58,7 +58,7 @@ export default function SignupPage() {
   };
 
   // Framer Motion variants for animations
-  const containerVariants = {
+  const containerVariants:Variants = {
     hidden: { opacity: 0, y: -50 },
     visible: {
       opacity: 1,
@@ -73,7 +73,7 @@ export default function SignupPage() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants:Variants= {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
   };

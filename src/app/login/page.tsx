@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion'; // Import Variants type
 
 // Falling Stars Background Component
 const StarsBackground = () => {
@@ -15,7 +15,6 @@ const StarsBackground = () => {
           style={{
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
-            // Use a star character
             pointerEvents: 'none', // Ensures stars don't interfere with mouse events
           }}
           animate={{
@@ -40,22 +39,34 @@ const StarsBackground = () => {
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
   const router = useRouter();
 
   const handleLogin = async () => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    });
+    setErrorMessage(null); // Clear previous errors
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (res.ok) {
-      router.push('/dashboard');
-    } else {
-      alert('Login failed');
+      if (res.ok) {
+        router.push('/dashboard');
+      } else {
+        const errorData = await res.json();
+        setErrorMessage(errorData.message || 'Login failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrorMessage('An unexpected error occurred during login.');
     }
   };
 
-  const containerVariants = {
+  // Define variants with explicit typing
+  const containerVariants: Variants = {
     hidden: { opacity: 0, y: -50 },
     visible: {
       opacity: 1,
@@ -70,7 +81,7 @@ export default function LoginPage() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
   };
@@ -89,6 +100,16 @@ export default function LoginPage() {
           Sign In ✨
         </motion.h2>
 
+        {errorMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-500/20 border border-red-400 text-red-200 px-4 py-3 rounded-lg mb-6 text-center"
+          >
+            {errorMessage}
+          </motion.div>
+        )}
+
         <motion.input
           className="w-full bg-white/10 border border-white/20 rounded-lg px-5 py-3 mb-5 text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-400 focus:border-transparent outline-none transition-all duration-300"
           type="email"
@@ -96,6 +117,7 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           variants={itemVariants}
           whileHover={{ scale: 1.01, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+          value={email} // Controlled component
         />
 
         <motion.input
@@ -105,6 +127,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           variants={itemVariants}
           whileHover={{ scale: 1.01, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+          value={password} // Controlled component
         />
 
         <motion.button
@@ -116,15 +139,16 @@ export default function LoginPage() {
         >
           Log In
         </motion.button>
-         <motion.div
-  className="text-lg text-white/80 text-center mt-6 cursor-pointer" // Adjusted text size, color, and added cursor
-  variants={itemVariants}
-  onClick={() => router.push('/signup')}
-  whileHover={{ scale: 1.05, color: '#60A5FA' }} // Hover effect for text color and scale
-  whileTap={{ scale: 0.95 }} // Click effect
->
-  Do not have an account? <span className="font-semibold text-blue-400 hover:underline">Sign Up</span>
-</motion.div>
+
+        <motion.div
+          className="text-lg text-white/80 text-center mt-6 cursor-pointer"
+          variants={itemVariants}
+          onClick={() => router.push('/signup')}
+          whileHover={{ scale: 1.05, color: '#60A5FA' }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Do not have an account? <span className="font-semibold text-blue-400 hover:underline">Sign Up</span>
+        </motion.div>
       </motion.div>
     </div>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { DM_Sans } from 'next/font/google';
 
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '700'] });
@@ -38,7 +38,7 @@ const StarsBackground = () => {
 };
 
 export default function HomePage() {
-  const containerVariants = {
+  const containerVariants:Variants = {
     hidden: { opacity: 0, y: -50 },
     visible: {
       opacity: 1,
@@ -53,7 +53,7 @@ export default function HomePage() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants:Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };

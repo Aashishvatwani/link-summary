@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Bookmark from '@/lib/models/Bookmark';
 
-// Use RouteHandlerContext from 'next'
+// Remove explicit typing of context parameter to let TS infer type
 export async function DELETE(
   req: NextRequest,
   context: { params: { id: string } }
