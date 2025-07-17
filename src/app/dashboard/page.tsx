@@ -74,7 +74,7 @@ export default function Dashboard() {
   const deleteBookmark = async (id: string) => {
     try {
       setError(null); // Clear previous errors
-      const res = await fetch(`/api/bookmark/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/bookmark/${id}`);
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to delete bookmark.');
