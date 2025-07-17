@@ -4,7 +4,10 @@ import { fetchMetadata } from '@/lib/fetchMetadata';
 import { getSummary } from '@/lib/summary';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-
+type JwtPayload = {
+  userId: string;
+  email?: string; // optional, if present
+};
 // GET /api/bookmarks
 export async function GET(req: NextRequest) {
   await dbConnect();
@@ -32,7 +35,7 @@ export async function POST(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET!) as any;
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
     const { title, favicon } = await fetchMetadata(url);
     const summary = await getSummary(url);
