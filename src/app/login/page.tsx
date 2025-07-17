@@ -123,7 +123,7 @@ export default function LoginPage() {
   whileHover={{ scale: 1.05, color: '#60A5FA' }} // Hover effect for text color and scale
   whileTap={{ scale: 0.95 }} // Click effect
 >
-  Don't have an account? <span className="font-semibold text-blue-400 hover:underline">Sign Up</span>
+  Do not have an account? <span className="font-semibold text-blue-400 hover:underline">Sign Up</span>
 </motion.div>
       </motion.div>
     </div>
