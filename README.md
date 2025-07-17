@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🔗 Link Saver + Auto Summary
+A simple and elegant bookmarking app that allows users to save, auto-summarize, and manage their favorite web links. Supports light/dark theme toggling and includes user authentication and dashboard functionality.
 
-## Getting Started
+  Features
+🔖 Save bookmarks with title, favicon, and summary
 
-First, run the development server:
+🌓 Dark/Light theme toggle with system preference detection
 
-```bash
+🧠 AI-generated summaries for each link
+
+🗑️ Delete bookmarks
+
+🔐 Authentication (Login / Signup)
+
+ Fast, responsive UI built with Next.js App Router
+
+📁 Project Structure
+bash
+Copy
+Edit
+.
+├── app/
+│   ├── layout.tsx             # Global layout
+│   ├── page.tsx               # Home page
+│   ├── dashboard/page.tsx     # Dashboard for saved bookmarks
+│   ├── login/page.tsx         # Login page
+│   ├── signup/page.tsx        # Signup page
+│   ├── api/bookmarks/         # API routes for bookmarks
+│
+├── components/
+│   └── BookmarkCard.tsx       # UI component for a single bookmark
+│
+├── hooks/
+│   └── useTheme.ts            # Custom hook for theme management
+│
+├── public/                    # Public assets (if any)
+├── styles/
+│   └── globals.css            # Tailwind base styles
+├── tailwind.config.js         # Tailwind CSS config
+├── tsconfig.json              # TypeScript config
+└── README.md
+ Getting Started
+1. Clone the repo
+bash
+Copy
+Edit
+git clone https://github.com/your-username/link-saver.git
+cd link-saver
+2. Install dependencies
+bash
+Copy
+Edit
+npm install
+# or
+yarn install
+3. Run locally
+bash
+Copy
+Edit
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+App will be available at: http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ Tech Stack
+Framework: Next.js 13+ App Router
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Styling: Tailwind CSS
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+State/Theme: React useState + custom hook
 
-## Learn More
+API: Next.js API Routes (can be swapped with Express, Appwrite, etc.)
 
-To learn more about Next.js, take a look at the following resources:
+TypeScript: Fully typed for safety and scalability
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ Theme Handling
+Dark mode is managed using the class strategy in Tailwind. A custom hook (useTheme.ts) syncs the theme with system preferences and user interaction.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ To Do / Improvements
+ AI summary generation using OpenAI / Langchain
 
-## Deploy on Vercel
+ Persistent theme preference using localStorage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ Tagging and search/filter bookmarks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ Bookmark categories or folders
+
+ Authentication via Firebase / Auth.js
+
+ Responsive mobile design enhancements
+
+ Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+ License
+MIT © Aashish
