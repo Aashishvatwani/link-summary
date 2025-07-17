@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Bookmark from '@/lib/models/Bookmark';
 
-// Remove explicit typing of context parameter to let TS infer type
 export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
+  req: NextRequest
 ) {
   await dbConnect();
 
-  const { id } = context.params;
+  // Extract id from the URL pathname
+  const url = new URL(req.url);
+  const id = url.pathname.split('/').pop();
 
   if (!id) {
     return NextResponse.json({ error: 'Bookmark ID is required' }, { status: 400 });
@@ -23,8 +23,8 @@ export async function DELETE(
     }
 
     return NextResponse.json({ message: 'Bookmark deleted successfully' });
-  } catch (err) {
-    console.error('DELETE /api/bookmark/[id] error:', err);
-    return NextResponse.json({ error: 'Failed to delete bookmark' }, { status: 500 });
+  } catch (error) { // Added 'any' for err type for broader compatibility
+    console.error('DELETE /api/bookmark/[id] error:', error);
+   return NextResponse.json({ error: 'Failed to delete bookmark' }, { status: 500})
   }
 }
