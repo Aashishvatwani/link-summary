@@ -2,7 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import BookmarkCard from '@/components/BookmarkCard';
-
+type Bookmark = {
+  _id: string;
+  title: string;
+  summary: string;
+  url: string;
+  favicon: string;
+};
 export default function Dashboard() {
   const [url, setUrl] = useState('');
   const [bookmarks, setBookmarks] = useState([]);
@@ -26,13 +32,14 @@ export default function Dashboard() {
 
       const data = await res.json();
       setBookmarks(data);
-    } catch (err: any) {
-      console.error('Error fetching bookmarks:', err);
-      setError(err.message || 'An error occurred while fetching bookmarks.');
+    } catch (error) {
+      console.error('Error fetching bookmarks:', error);
+      setError( 'An error occurred while fetching bookmarks.');
     } finally {
       setLoading(false);
     }
   };
+
 
   const saveBookmark = async () => {
     if (!url.trim()) {
@@ -58,9 +65,9 @@ export default function Dashboard() {
 
       setUrl(''); // Clear input on success
       fetchBookmarks(); // Refresh the list
-    } catch (err: any) {
-      console.error(`Failed to save: ${err}`);
-      setError(err.message || 'An error occurred while saving the bookmark.');
+    } catch (error) {
+      console.error(`Failed to save: ${error}`);
+      setError( 'An error occurred while saving the bookmark.');
     }
   };
 
@@ -73,9 +80,9 @@ export default function Dashboard() {
         throw new Error(errorData.message || 'Failed to delete bookmark.');
       }
       fetchBookmarks(); // Refresh the list after deletion
-    } catch (err: any) {
-      console.error(`Failed to delete: ${err}`);
-      setError(err.message || 'An error occurred while deleting the bookmark.');
+    } catch (error) {
+      console.error(`Failed to delete: ${error}`);
+      setError( 'An error occurred while deleting the bookmark.');
     }
   };
 
@@ -125,7 +132,7 @@ export default function Dashboard() {
         ) : bookmarks.length === 0 ? (
           <p className="text-gray-500 text-center col-span-full">No bookmarks saved yet. Add one above! 😄</p>
         ) : (
-          bookmarks.map((bm: any) => (
+          bookmarks.map((bm: Bookmark) => (
             <BookmarkCard
               key={bm._id}
               title={bm.title}
